@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shinequa's Hello Kitty Portfolio</title>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+        }
+        
+        body {
+            background-color: #ffebf2;
+            color: #ff5e9a;
+            overflow-x: hidden;
+        }
+        
+        /* Loading Screen */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #ffebf2;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 1s ease-out;
+        }
+        
+        .hello-kitty-loading {
+            width: 200px;
+            height: 200px;
+            background-image: url('https://i.imgur.com/Sr25A75.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            animation: bounce 1.5s infinite;
+        }
+        
+        .loading-text {
+            margin-top: 20px;
+            font-size: 24px;
+            color: #ff5e9a;
+        }
+        
+        .loading-text i {
+            margin-left: 10px;
+            animation: spin 2s linear infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Main Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            opacity: 0;
+            transition: opacity 1s ease-in;
+        }
+        
+        /* Header */
+        header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 3px dashed #ff9ec6;
+            margin-bottom: 30px;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .hello-kitty {
+            width: 80px;
+            height: 80px;
+            background-image: url('https://i.imgur.com/tR9GZ8O.jpeg');
+            background-size: contain;
+            background-repeat: no-repeat;
+        }
+        
+        /* Profile Section */
+        .profile-section {
+            display: flex;
+            margin-bottom: 40px;
+            background-color: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(255, 94, 154, 0.2);
+        }
+        
+        .profile-image {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            border: 5px solid #ff9ec6;
+            background-image: url('https://i.imgur.com/rVzl432.png');
+            background-size: cover;
+            background-position: center;
+            margin-right: 30px;
+            flex-shrink: 0;
+            position: relative;
+        }
+        
+        .profile-image::after {
+            content: '\f005';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background: #ff5e9a;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+        
+        .profile-info {
+            flex-grow: 1;
+        }
+        
+        .section-title {
+            font-size: 28px;
+            margin-bottom: 15px;
+            color: #ff5e9a;
+            border-bottom: 2px dotted #ff9ec6;
+            padding-bottom: 5px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .section-title i {
+            margin-right: 10px;
+        }
+        
+        .name-title {
+            font-size: 36px;
+            font-weight: bold;
+            color: #ff5e9a;
+            text-shadow: 2px 2px 0px #fff;
+            margin-bottom: 10px;
+        }
+        
+        /* About Me Section */
+        .about-section {
+            background-color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 40px;
+            box-shadow: 0 5px 15px rgba(255, 94, 154, 0.2);
+        }
+        
+        .typing-text {
+            font-size: 18px;
+            line-height: 1.6;
+            min-height: 120px;
+        }
+        
+        .typing-text i {
+            margin-right: 8px;
+            color: #ff9ec6;
+        }
+        
+        .cursor {
+            display: inline-block;
+            width: 8px;
+            height: 20px;
+            background-color: #ff5e9a;
+            animation: blink 0.7s infinite;
+            vertical-align: middle;
+        }
+        
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+        
+        /* Social Icons */
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-icons a {
+            color: #ff5e9a;
+            font-size: 24px;
+            transition: transform 0.3s;
+        }
+        
+        .social-icons a:hover {
+            transform: translateY(-5px) scale(1.1);
+        }
+        
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 20px;
+            border-top: 3px dashed #ff9ec6;
+            margin-top: 30px;
+            font-size: 14px;
+        }
+        
+        footer i {
+            color: #ff5e9a;
+            margin: 0 5px;
+        }
+        
+        /* Music Player */
+        .music-player {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: white;
+            padding: 10px;
+            border-radius: 50px;
+            box-shadow: 0 3px 10px rgba(255, 94, 154, 0.3);
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .music-info {
+            font-size: 12px;
+            color: #ff5e9a;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 0;
+            transition: max-width 0.5s;
+        }
+        
+        .music-player:hover .music-info {
+            max-width: 150px;
+        }
+        
+        .music-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: #ff5e9a;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: transform 0.3s;
+        }
+        
+        .music-btn:hover {
+            transform: scale(1.1);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .profile-section {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .profile-image {
+                margin-right: 0;
+                margin-bottom: 20px;
+            }
+            
+            .social-icons {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="hello-kitty-loading"></div>
+        <div class="loading-text">Loading Shinequa's World... <i class="fas fa-heart"></i></div>
+    </div>
+    
+    <!-- Main Content -->
+    <div class="container" id="mainContent">
+        <header>
+            <div class="logo">
+                <div class="hello-kitty"></div>
+            </div>
+        </header>
+        
+        <section class="profile-section">
+            <div class="profile-image"></div>
+            <div class="profile-info">
+                <div class="name-title">SHINEQUA <i class="fas fa-crown"></i></div>
+                <h2 class="section-title"><i class="fas fa-paw"></i> Hello Kitty Lover</h2>
+                <p><i class="fas fa-quote-left"></i> Welcome to my kawaii world! I'm Shinequa, a Hello Kitty enthusiast living my best pink life. <i class="fas fa-quote-right"></i></p>
+                
+                <div class="social-icons">
+                    <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" title="TikTok"><i class="fab fa-tiktok"></i></a>
+                    <a href="#" title="YouTube"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+        </section>
+        
+        <section class="about-section">
+            <h2 class="section-title"><i class="fas fa-user"></i> About Me</h2>
+            <div class="typing-text" id="typingText"></div>
+        </section>
+        
+        <footer>
+            <p><i class="fas fa-heart"></i> © 2023 Shinequa's Hello Kitty World. All rights reserved. <i class="fas fa-heart"></i></p>
+        </footer>
+    </div>
+    
+    <!-- Music Player -->
+    <div class="music-player">
+        <div class="music-info">Pangarap Lang Kita</div>
+        <button class="music-btn" id="musicBtn"><i class="fas fa-music"></i></button>
+        <audio id="bgMusic" loop>
+            <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+            <!-- Note: I used a placeholder audio as I can't verify the actual pangarap-lang-kita.mp3 file -->
+        </audio>
+    </div>
+    
+    <script>
+        // Loading Screen
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                document.getElementById('loadingScreen').style.opacity = '0';
+                setTimeout(function() {
+                    document.getElementById('loadingScreen').style.display = 'none';
+                    document.getElementById('mainContent').style.opacity = '1';
+                }, 1000);
+            }, 2000);
+        });
+        
+        // Typing Effect
+        const aboutTexts = [
+            "<i class='fas fa-utensils'></i> I can cook. ",
+            "<i class='fas fa-binoculars'></i> I am stalker. ",
+            "<i class='fas fa-money-bill-wave'></i> My dream is to marry a billionaire. ",
+            "<i class='fas fa-heart'></i> Cha Eun Woo's girlfriend. "
+        ];
+        
+        const typingElement = document.getElementById('typingText');
+        let textIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        let isEnd = false;
+        
+        function type() {
+            const currentText = aboutTexts[textIndex];
+            
+            if (isDeleting) {
+                typingElement.innerHTML = currentText.substring(0, charIndex - 1) + '<span class="cursor"></span>';
+                charIndex--;
+            } else {
+                typingElement.innerHTML = currentText.substring(0, charIndex + 1) + '<span class="cursor"></span>';
+                charIndex++;
+            }
+            
+            if (!isDeleting && charIndex === currentText.length) {
+                isEnd = true;
+                isDeleting = true;
+                setTimeout(type, 1500);
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                textIndex++;
+                if (textIndex >= aboutTexts.length) {
+                    textIndex = 0;
+                }
+                setTimeout(type, 500);
+            } else {
+                const typingSpeed = isDeleting ? 100 : 150;
+                setTimeout(type, typingSpeed);
+            }
+        }
+        
+        // Start typing effect after page loads
+        setTimeout(type, 2500);
+        
+        // Music Player
+        const musicBtn = document.getElementById('musicBtn');
+        const bgMusic = document.getElementById('bgMusic');
+        let isPlaying = false;
+        
+        musicBtn.addEventListener('click', function() {
+            if (isPlaying) {
+                bgMusic.pause();
+                musicBtn.innerHTML = '<i class="fas fa-music"></i>';
+            } else {
+                bgMusic.play();
+                musicBtn.innerHTML = '<i class="fas fa-pause"></i>';
+            }
+            isPlaying = !isPlaying;
+        });
+        
+        // Enable music after user interaction
+        document.body.addEventListener('click', function() {
+            if (bgMusic.paused) {
+                bgMusic.play().then(() => {
+                    bgMusic.pause();
+                    bgMusic.currentTime = 0;
+                }).catch(error => {
+                    console.log("Auto-play was prevented. Please click the music button to play.");
+                });
+            }
+        }, { once: true });
+    </script>
+</body>
+</html>
